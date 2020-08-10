@@ -1,0 +1,12 @@
+{
+    "liveServer.settings.port": 5500,
+    "liveServer.settings.root": "/",
+    "liveServer.settings.CustomBrowser": "chrome",
+    "liveServer.settings.https": {
+      "enable": true,
+      "cert": "/home/ec2-user/workspace/client-inference/https/localhost.pem",
+      "key": "/home/ec2-user/workspace/client-inference/https/localhost.key",
+      "passphrase": "test"
+    },
+    "python.pythonPath": "/usr/bin/python3"
+}

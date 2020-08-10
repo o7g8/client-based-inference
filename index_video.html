@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Client-side inference</title>
+
+    <link rel="stylesheet" href="">
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.1"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"> </script>
+
+    <div id="backend"></div>
+    <div id="status"></div>
+    <video id="myVideo" autoplay muted playsinline></video>
+    <canvas id="myCanvas" width="500" height="500" style="display: none;"></canvas>
+
+
+    <script>
+      (async () => {
+        const status = document.getElementById('status');
+        const backend = document.getElementById('backend');
+        const myVideo = document.getElementById('myVideo');
+        const myCanvas = document.getElementById('myCanvas');
+        const ctx = myCanvas.getContext('2d');
+
+        tf.enableProdMode(); // remove checks for performance
+        const model = await mobilenet.load();
+        backend.innerHTML = `Backend: ${tf.getBackend()}`;
+
+        const videoStream = await navigator.mediaDevices.getUserMedia({
+          audio: false,
+          video: {
+            facingMode: 'environment'
+          }
+        });
+        myVideo.srcObject = videoStream;
+        
+        predict();
+        async function predict() {
+          ctx.drawImage(myVideo, 0, 0, 500, 500);
+          const predictions = await model.classify(myCanvas);
+          console.log(predictions);
+          status.innerHTML = `Predictions: ${predictions[0].className}@${predictions[0].probability.toPrecision(1)}`;
+
+          //requestAnimationFrame(predict);
+          setTimeout(() => predict(), 300);
+        }
+      })();
+    </script>
+
+  </body>
+</html>
+
