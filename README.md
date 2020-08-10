@@ -1,6 +1,8 @@
 # Demo of a client-side inference
 
-Demonstration of a client-side inference using [Tensorflow.js](https://www.tensorflow.org/js) and (MobileNet)[https://github.com/tensorflow/tfjs-examples/tree/master/mobilenet]. The JS code is based on the tutorial (Realtime object detection with MobileNet - ML with Tensorflow.js #5)[https://www.youtube.com/watch?v=QUmuxu6pJD0].
+Demonstration of a client-side inference using [Tensorflow.js](https://www.tensorflow.org/js) and [MobileNet](https://github.com/tensorflow/tfjs-examples/tree/master/mobilenet).
+
+The JS code is based on the tutorial [Realtime object detection with MobileNet - ML with Tensorflow.js #5](https://www.youtube.com/watch?v=QUmuxu6pJD0).
 
 ## Prerequisites
 
