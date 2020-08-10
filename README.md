@@ -6,16 +6,18 @@ The JS code is based on the tutorial [Realtime object detection with MobileNet -
 
 ## Prerequisites
 
+- A server: local machine, Cloud VM, or a device with installed Python 3.
+
 - A laptop or a phone with a camera and a modern web-browser.
 
-- Download ngrok: 
+- (Optional) In case your users are behind firewall/proxy blocking non-standrad ports, download [ngrok](https://ngrok.com/): 
 
 ```
 wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
 unzip ngrok-stable-linux-amd64.zip -d ~
 ```
 
-- In case you will serve the web-server with VSCode Live Server, fix the path to the certifcates and key files in the `.vscode/settings.json`.
+- In case you will serve the web-server with VSCode [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer), fix the path to the certifcates and key files in the `.vscode/settings.json`.
 
 ## Start the HTTPS server serving the webpage with the model 
 
