@@ -17,6 +17,8 @@ wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
 unzip ngrok-stable-linux-amd64.zip -d ~
 ```
 
+ngrok requires a (free) account to serve HTTPS endpoints, therefore create the account on <https://ngrok.com> and run `ngrok authtoken <token>`according to <https://dashboard.ngrok.com/get-started/setup>.
+
 - In case you will serve the web-server with VSCode [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer), fix the path to the certifcates and key files in the `.vscode/settings.json`.
 
 ## Start the HTTPS server serving the webpage with the model 
@@ -38,3 +40,19 @@ Check the local HTTPS serving with:
 ## Open the webpage with the browser
 
 Open the browser with `https://<your-machine>:5500` (or `https://<ngrok-endpoint>/`) and open the page `index_video.html`.
+
+
+## Greengrass deployment
+
+Based on [New – AWS IoT Greengrass Adds Container Support and Management of Data Streams at the Edge](https://aws.amazon.com/blogs/aws/new-aws-iot-greengrass-adds-docker-support-and-streams-management-at-the-edge/)
+
+Build the container `gg-demo/client-inference` with the HTTPS server and the pages:
+
+`./docker_build.sh`
+
+Test the container working locally:
+
+```
+docker run -p 6600:5500 gg-demo/client-inference
+wget https://localhost:6600 --no-check-certificate
+```
