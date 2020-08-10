@@ -44,7 +44,11 @@ Open the browser with `https://<your-machine>:5500` (or `https://<ngrok-endpoint
 
 ## Greengrass deployment
 
-Based on [New – AWS IoT Greengrass Adds Container Support and Management of Data Streams at the Edge](https://aws.amazon.com/blogs/aws/new-aws-iot-greengrass-adds-docker-support-and-streams-management-at-the-edge/)
+Based on [New – AWS IoT Greengrass Adds Container Support and Management of Data Streams at the Edge](https://aws.amazon.com/blogs/aws/new-aws-iot-greengrass-adds-docker-support-and-streams-management-at-the-edge/).
+
+Use your own Greengrass host or deploy an EC2 with installed Greengrass using the [CloudFormation template](https://us-west-2.console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=awsiotworkshop&templateURL=https://s3-us-west-2.amazonaws.com/iotworkshop/ec2-cf-fast-2020.json) taken from <http://iot.awsworkshops.com>.
+
+### Create the Docker container
 
 Build the container `gg-demo/client-inference` with the HTTPS server and the pages:
 
@@ -56,3 +60,7 @@ Test the container working locally:
 docker run -p 6600:5500 gg-demo/client-inference
 wget https://localhost:6600 --no-check-certificate
 ```
+
+### Deploy the container to ECR
+
+### Deploy the container to Greengrass
