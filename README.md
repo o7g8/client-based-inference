@@ -1,8 +1,10 @@
 # Demo of a client-side inference
 
-You need to serve it as HTTPS endpoint to make the user-device camera work.
+Demonstration of a client-side inference using (Tensorflow.js)[https://www.tensorflow.org/js] and (MobileNet)[https://github.com/tensorflow/tfjs-examples/tree/master/mobilenet]. The JS code is based on the tutorial (Realtime object detection with MobileNet - ML with Tensorflow.js #5)[https://www.youtube.com/watch?v=QUmuxu6pJD0].
 
 ## Prerequisites
+
+- A laptop or a phone with a camera and a modern web-browser.
 
 - Download ngrok: 
 
@@ -15,17 +17,20 @@ unzip ngrok-stable-linux-amd64.zip -d ~
 
 ## Start the HTTPS server serving the webpage with the model 
 
-It can be served either or:
+To make user-device camera work the pages need to be served over HTTPS. It can be using one of the approaches below:
 
-- Live Server VSCode extesion: Go Live, mthen run the `ngrok_https.sh` to forward the custom port (5500) to a firewall/proxy-friendly endpoint on ngrok.
+- Live Server VSCode extesion: Go Live.
 
-- run `python3 py_serv_https.py` and then expose it via ngrok with `ngrok_https.sh`.
+- run `python3 py_serv_https.py`.
 
-You can check the local serving is working with:
+Check the local HTTPS serving with:
 
 `wget https://localhost:5500 --no-check-certificate`
 
+(Optional): in case your users are behind firewall/proxy you may need to expose the custom port (5500) to a firewall/proxy-friendly endpoint on ngrok:
+
+`./ngrok_https.sh`
+
 ## Open the webpage with the browser
 
-Open the browser with `https://<ngrok-endpoint>/` and open the page `index_video.html`.
-
+Open the browser with `https://<your-machine>:5500` (or `https://<ngrok-endpoint>/`) and open the page `index_video.html`.
