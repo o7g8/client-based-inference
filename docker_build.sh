@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker build -t gg-demo/client-inference:latest .
+docker build -t gg-client-inference:latest .

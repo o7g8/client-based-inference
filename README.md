@@ -57,10 +57,70 @@ Build the container `gg-demo/client-inference` with the HTTPS server and the pag
 Test the container working locally:
 
 ```
-docker run -p 6600:5500 gg-demo/client-inference
+docker run -p 6600:5500 gg-client-inference:latest
 wget https://localhost:6600 --no-check-certificate
 ```
 
 ### Deploy the container to ECR
 
+Create the ECR repository `gg-client-inference` and follow the Push command guidance available in the AWS Console.
+
 ### Deploy the container to Greengrass
+
+Allow Greengras core access docker compose file on S3 and pull the image from the ECR repository by add following managed policies to the Greengrass Core role:
+
+- `AmazonS3ReadOnlyAccess`
+- `AmazonEC2ContainerRegistryReadOnly`
+
+You can of course create narrowed down policies scoped to the given S3 destination and following the [Amazon ECR Repository Policies](https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-policies.html)
+
+
+- Upload the `docker-compose.yml` to S3.
+
+- On the Greengrass device:
+
+```
+sudo mkdir /greengrass/compose
+chown ggc_user:docker /greengrass/compose
+```
+
+- Add Greengrass user into docker group:
+
+`usermod -a -G docker ggc_user`
+
+Alternatively you can create a dedicated Linux-user for the given contaier, make it a member of a the Docker group and specify the user in the Docker Connector properties below.
+
+- Install `docker-compose` (see <https://docs.docker.com/compose/install/>):
+
+```
+sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+```
+
+- AWS Console -> Greengrass -> Groups -> <Your group> ->  Add a connector -> Docker Application Deployment:
+
+    - Docker Compose file in S3: point to the uploaded `docker-compose.yml` on S3.
+
+    - Set the path for the local Compose file:
+
+    `/greengrass/compose`
+
+- AWS Console: deploy the Greengras group again and check the Greengrass log if there were any errors:
+
+`tail /greengrass/ggc/var/log/user/<your-region>/aws/DockerApplicationDeployment.log`
+
+You should see something similar to:
+
+```
+Creating greengrassdockerapplicationdeployment_web_1 ... done
+[2020-08-11T13:39:04.909Z][ERROR]-
+[2020-08-11T13:39:04.909Z][INFO]-docker_runner.py:125,Compose up successfull with following output
+```
+
+- Check the container running on the Greengrass machine:
+
+```
+netstat -nlt | grep 6600
+wget https://localhost:6600 --no-check-certificate
+```
